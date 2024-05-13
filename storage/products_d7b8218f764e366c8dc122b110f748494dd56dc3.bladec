@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Danh sách sản phẩm</title>
+</head>
+
+<body>
+ <a href="<?= route('login');?>">Login</a>
+ <a href="<?= route('create-product');?>">Add product</a>
+ <table>
+ <tr>
+ <th>ID</th>
+ <th>Name</th>
+ <th>Description</th>
+ <th>Price</th>
+ <th>Status</th>
+ <th>Action</th>
+ </tr>
+ <?php foreach ($products as $product) {
+ extract($product);
+ ?>
+ <tr>
+ <td><?= $id ?></td>
+ <td><?= $name ?></td>
+ <td><?= $description ?></td>
+ <td><?= $price ?></td>
+ <td><?= $status ?></td>
+ <td>
+ <a href="<?=route('/products/'.$id.'/edit')?>">Edit</a>
+ <a href="<?=route('/products/'.$id.'/delete')?>" onclick="return confirm('bạn có muốn xóa không?')">Delete</a>
+ </td>
+ </tr>
+ <?php } ?>
+ </table>
+</body>
+
+</html>

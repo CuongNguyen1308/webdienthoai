@@ -1,0 +1,45 @@
+<?php $_shouldextend[1]=1; ?>
+<?php $this->startSection('content'); ?>
+<?php if(isset($this->currentUser)): ?>
+<!-- user đã đăng nhập -->
+<span>Cuongnb</span>
+<?php endif; ?>
+<?php if(!isset($this->currentUser)): ?>
+<button>Đăng nhập</button>
+<?php endif; ?>
+<a href="<?php echo \htmlentities(route('login')??'', ENT_QUOTES, 'UTF-8', false); ?>">Login</a>
+<a href="<?php echo \htmlentities(route('create-product')??'', ENT_QUOTES, 'UTF-8', false); ?>">Add product</a>
+<table>
+ <tr>
+ <th>ID</th>
+ <th>Tên sản phẩm</th>
+ <th>Giá gốc</th>
+ <th>Giảm giá</th>
+ <th>Mô tả</th>
+ <th>Hình</th>
+ <th>Số lượt xem</th>
+ <th>Danh mục</th>
+ <th>Action</th>
+ </tr>
+ <?php $__currentLoopData = $products; $this->addLoop($__currentLoopData);$this->getFirstLoop();
+ foreach($__currentLoopData as $product): $loop = $this->incrementLoopIndices();  ?>
+ 
+ <tr>
+ <td><?php echo \htmlentities($product['id_sp']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['ten_sp']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['gia_goc']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['giam_gia']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['mo_ta']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['hinh']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['so_luot_xem']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($product['id_dm']??'', ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td>
+ <a href="<?php echo \htmlentities(route('products/' . $product['id_sp'] . '/edit')??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn btn-primary">Edit</a>
+ <a href="<?php echo \htmlentities(route('products/' . $product['id_sp'] . '/delete')??'', ENT_QUOTES, 'UTF-8', false); ?>" class="btn btn-danger" onclick="return confirm('bạn có muốn xóa không?')">Delete</a>
+ </td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+</table>
+<?php $this->stopSection(); ?>
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('layouts.admin'); } ?>

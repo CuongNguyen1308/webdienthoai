@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao tối thiểu là 100% của viewport */
+}
+footer {
+    margin-top: auto; /* Đẩy footer xuống cuối trang */
+}
+a{
+    text-decoration: none;
+    color: white;
+}
