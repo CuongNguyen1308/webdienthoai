@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <h3>Thêm sản phẩm</h3>
-<form action="" method="post" enctype="multipart/form-data">
+<form action="{{ route("admin/san_pham/add_sp") }}" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="name" class="form-label">Tên sản phẩm</label>
         <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" name="ten_sp" />

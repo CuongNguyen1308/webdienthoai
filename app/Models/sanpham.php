@@ -15,7 +15,7 @@ class Sanpham extends db
     }
     public function san_pham()
     {
-        
+
         $query = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm limit 0,12";
 
         return $this->pdo_query($query);
@@ -46,16 +46,17 @@ class Sanpham extends db
         $sql = "SELECT * FROM san_pham where giam_gia > 0 ORDER BY giam_gia DESC LIMIT 0,12";
         return $this->pdo_query($sql);
     }
-    public function loc_sanpham(){
+    public function loc_sanpham()
+    {
         $where = '1';
-        $loc='';
+        $loc = '';
         if (isset($_GET["page"])) {
             $page = $_GET["page"];
         } else {
             $page = 1;
         }
         $row = 12;
-        $start=($page -1)*$row;
+        $start = ($page - 1) * $row;
         if (isset($_POST['loc'])) {
             if ($_POST['loc'] == 'thap-cao') {
                 $loc = 'ORDER BY san_pham.gia_goc asc';
@@ -86,20 +87,24 @@ class Sanpham extends db
         $sql = "SELECT * FROM san_pham INNER JOIN danh_muc ON danh_muc.id_dm = san_pham.id_dm WHERE $where $and $loc  LIMIT $start,$row ";
         return $this->pdo_query($sql);
     }
-    
-    public function top5(){
+
+    public function top5()
+    {
         $sql = 'SELECT * FROM san_pham WHERE so_luot_xem > 0 ORDER BY so_luot_xem DESC LIMIT 0,5';
         return $this->pdo_query($sql);
     }
-    public function sanpham_lienquan($id_dm,$id_sp){
+    public function sanpham_lienquan($id_dm, $id_sp)
+    {
         $sql = "SELECT * FROM san_pham WHERE id_dm = $id_dm AND id_sp != $id_sp LIMIT 0,4";
         return $this->pdo_query($sql);
     }
-    public function phan_trang($start,$row){
+    public function phan_trang($start, $row)
+    {
         $sql = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm LIMIT $start,$row";
         return $this->pdo_query($sql);
     }
-    public function tong_trang(){
+    public function tong_trang()
+    {
         $sql = "SELECT COUNT(*) as tongrecord FROM san_pham";
         return $this->pdo_query_one($sql);
     }

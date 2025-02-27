@@ -10,17 +10,16 @@
     <table class="table">
         <tr>
             <th>STT</th>
-            <th>Tên người dùng</th>
-            <th>Nội dung</th>
-            <th>Hoạt động</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượt bình luận</th>
+            <th>Xem bình luận</th>
         </tr>
         @foreach ($list as $key => $value)
             <tr>
                 <th>{{ $key + 1 }}</th>
-                <th>{{ $value['ho_ten'] }}</th>
-                <th>{{ $value['noi_dung'] }}</th>
-                <th><a href="{{ route('admin/binh_luan/' . $value['id_bl'] . '/delete') }}" class="btn btn-danger"
-                        onclick="return confirm('Bạn có muốn xóa không?')">Xóa</a></th>
+                <th>{{ $value['ten_sp'] }}</th>
+                <th>{{ $value['so_luot_bl'] }}</th>
+                <th><a href="{{ route('admin/binh_luan/' . $value['id_sp'] ) }}" class="btn btn-warning">Xem</a></th>
             </tr>
         @endforeach
     </table>

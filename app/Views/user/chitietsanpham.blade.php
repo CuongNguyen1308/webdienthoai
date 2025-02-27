@@ -210,13 +210,13 @@
         <hr>
         <!--  -->
         <?php
-        if (isset($_SESSION['login'])) {
+        if (isset($_SESSION['user'])) {
         ?>
             <form action="" method="post">
                 <div class="form-floating">
                     <input class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="noi_dung"></input>
                     <label for="floatingTextarea">Comments</label>
-                    <button name="btn_guibl" style="display:none">Gửi</button>
+                    <button name="btn_guibl" >Gửi</button>
                 </div>
             </form>
         <?php

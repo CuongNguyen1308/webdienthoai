@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+    @if (isset($_SESSION['success_message']))
+        <div class="alert alert-success">
+            {{ $_SESSION['success_message'] }}
+        </div>
+        @php unset($_SESSION['success_message']); @endphp
+    @endif
     <h3>Danh sách sản phẩm</h3>
     <a href="{{ route('admin/san_pham/add_sp') }}" class="btn btn-primary">Thêm mới</a>
     <table class="table">
@@ -8,27 +14,28 @@
             <th>Tên sản phẩm</th>
             <th>Giá gốc</th>
             <th>Giảm giá</th>
-            <th>Mô tả</th>
             <th>Hình</th>
             <th>Số lượt xem</th>
             <th>Danh mục</th>
+            <th>Biến thể</th>
             <th>Action</th>
         </tr>
-        @foreach ($products as $key=>$product)
+        @foreach ($products as $key => $product)
             <tr>
-                <td>{{ $key+1 }}</td>
+                <td>{{ $key + 1 }}</td>
                 <td>{{ $product['ten_sp'] }}</td>
                 <td>{{ $product['gia_goc'] }}</td>
                 <td>{{ $product['giam_gia'] }}</td>
-                <td>{{ $product['mo_ta'] }}</td>
                 <td><img src="{{ BASE_URL }}public/uploads/{{ $product['hinh'] }}" alt="" height="50px"></td>
                 <td>{{ $product['so_luot_xem'] }}</td>
                 <td>{{ $product['ten_dm'] }}</td>
+                <td><a href="{{ route('admin/chi_tiet_san_pham/' . $product['id_sp'] .'/san_pham') }}" class="btn btn-primary">Xem biến
+                        thể</a></td>
                 <td>
                     <a href="{{ route('admin/san_pham/' . $product['id_sp'] . '/edit_sp') }}"
-                        class="btn btn-primary">Edit</a>
+                        class="btn btn-warning">Sửa</a>
                     <a href="{{ route('admin/san_pham/' . $product['id_sp'] . '/delete_sp') }}" class="btn btn-danger"
-                        onclick="return confirm('bạn có muốn xóa không?')">Delete</a>
+                        onclick="return confirm('bạn có muốn xóa không?')">Xóa</a>
                 </td>
             </tr>
         @endforeach

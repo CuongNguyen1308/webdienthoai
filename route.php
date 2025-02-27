@@ -8,6 +8,7 @@ use Phroute\Phroute\RouteCollector;
 use App\Controllers\User\ProductController as UserController;
 use App\Controllers\Admin\ProductController;
 use App\Controllers\Admin\CategoryController;
+use App\Controllers\Admin\CommentController;
 
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $router = new RouteCollector();
@@ -65,10 +66,11 @@ $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
     $router->get('/',[ProductController::class, "san_pham"]);
 
     $router->get('/danh_muc', [CategoryController::class,'danh_muc']);
-    $router->get('/danh_muc/add_dm', [CategoryController::class,'']);
-    $router->get('/danh_muc/{id_dm}/edit_dm', [CategoryController::class,'']);
-    $router->post('/danh_muc/{id_dm}/update_dm', [CategoryController::class,'']);
-    $router->get('/danh_muc/{id_dm}/delete_dm', [CategoryController::class,'']);
+    $router->get('/danh_muc/add', [CategoryController::class,'add']);
+    $router->post('/danh_muc/add', [CategoryController::class,'create']);
+    $router->get('/danh_muc/{id}/edit', [CategoryController::class,'edit']);
+    $router->post('/danh_muc/{id}/edit', [CategoryController::class,'update']);
+    $router->get('/danh_muc/{id}/delete', [CategoryController::class,'delete']);
 
     $router->get('/san_pham', [ProductController::class, 'san_pham']);
     $router->get('san_pham/page/{page}/',[ProductController::class,"san_pham"]);
@@ -78,18 +80,28 @@ $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
     $router->post('/san_pham/{id_sp}/edit_sp', [ProductController::class, 'update_sp']); // cập nhật dữ liệu vào database
     $router->get('/san_pham/{id_sp}/delete_sp', [ProductController::class, 'delete_sp']); // cập nhật dữ liệu vào database
 
+    $router->get('/chi_tiet_san_pham/{id_sp}/san_pham',[ProductController::class,'ctsp']);
+    $router->get('/chi_tiet_san_pham/{id_sp}/add', [ProductController::class, 'add_ctsp']); 
+    $router->post('/chi_tiet_san_pham/{id_sp}/add', [ProductController::class, 'create_ctsp']); 
+    $router->get('/chi_tiet_san_pham/{id_sp}/edit', [ProductController::class, 'edit_ctsp']); 
+    $router->post('/chi_tiet_san_pham/{id_sp}/edit', [ProductController::class, 'update_ctsp']); 
+    $router->get('/chi_tiet_san_pham/{id}/delete', [ProductController::class, 'delete_ctsp']); 
+
     $router->get('/tai_khoan', [AccountController::class,'list']);
     $router->get('/tai_khoan/add', [AccountController::class,'']);
     $router->get('/tai_khoan/{id_dm}/edit', [AccountController::class,'']);
     $router->post('/tai_khoan/{id_dm}/update', [AccountController::class,'']);
     $router->get('/tai_khoan/{id_dm}/delete', [AccountController::class,'']);
 
-    $router->get('/binh_luan', function () {
-        echo "Đây là trang quản lý category";
-    });
+    $router->get('/binh_luan', [CommentController::class,'list']);
+    $router->get('/binh_luan/{id_sp}', [CommentController::class,'list_bl']);
+    $router->get('/binh_luan/{id}/delete', [CommentController::class,'delete']);
+
     $router->get('/don_hang', [BillController::class,'hoa_don']);
     $router->get('don_hang/page/{page}/',[BillController::class,"hoa_don"]);
     $router->get('/don_hang/{id_hd}', [BillController::class,'cthd']);
+    $router->get('/don_hang/{id_hd}/edit', [BillController::class,'edit']);
+    $router->post('/don_hang/{id_hd}/edit', [BillController::class,'update']);
 });
 
 // get: trả về giao diện thêm mới sản phẩm

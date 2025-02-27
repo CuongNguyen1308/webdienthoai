@@ -20,7 +20,7 @@ class BillController extends BaseController
 
         $tongrecord = $this->hoadonModel->tong_trang();
         if (isset($_GET['page'])) $page = $_GET['page'];
-        $row = 8;
+        $row = 5;
         $start = ($page - 1) * $row;
         $offset = 3;
         $tongsotrang = ceil($tongrecord['tongrecord'] / $row);
@@ -39,14 +39,17 @@ class BillController extends BaseController
         $this->render('admin.don_hang.ctdh',compact('title','cthd'));
     }
 
-    public function add(){
-        
-    }
-    public function create(){
 
+    public function edit($id_hd){
+        $title = "Cập nhật đơn hàng";
+        $trangthai = $this->hoadonModel->trang_thai();
+        $donhang = $this->hoadonModel->getone_hoadon($id_hd);
+        $this->render('admin.don_hang.trangthai',compact('title','trangthai','donhang'));
     }
-    public function delete(){
-
+    public function update($id_hd){
+        $trangthai = $_POST['trang_thai'];
+        $this->hoadonModel->update_hoadon($id_hd,$trangthai);
+        $_SESSION['success_message'] = "Cập nhật trạng thái thành công!";
+        header('location:' . route(url: "admin/don_hang"));
     }
-
 }

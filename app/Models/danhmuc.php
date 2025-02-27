@@ -15,11 +15,11 @@ class Danhmuc extends db
         return $this->pdo_query_one($sql);
     }
     public function add_danhmuc($ten_dm){
-        $sql = "INSERT INTO danh_muc(ten_dm) VALUE($ten_dm)";
+        $sql = "INSERT INTO danh_muc(ten_dm) VALUE('$ten_dm')";
         $this->pdo_execute($sql);
     }
     public function update_danhmuc($id_dm,$ten_dm){
-        $sql = "UPDATE danh_muc SET ten_dm = $ten_dm WHERE id_dm = $id_dm ";
+        $sql = "UPDATE danh_muc SET ten_dm = '$ten_dm' WHERE id_dm = $id_dm ";
         $this->pdo_execute($sql);
     }
     public function chuyen_sp($id_dm){
