@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\db;
 
-class Product extends db
+class Sanpham extends db
 {
     //lấy toàn bộ sp ở trong CSDL
     public function listProduct()
@@ -15,6 +15,7 @@ class Product extends db
     }
     public function san_pham()
     {
+        
         $query = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm limit 0,12";
 
         return $this->pdo_query($query);
@@ -95,7 +96,7 @@ class Product extends db
         return $this->pdo_query($sql);
     }
     public function phan_trang($start,$row){
-        $sql = "SELECT * FROM san_pham LIMIT $start,$row";
+        $sql = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm LIMIT $start,$row";
         return $this->pdo_query($sql);
     }
     public function tong_trang(){

@@ -25,13 +25,7 @@
                 <th><?= $value['dia_chi'] ?></th>
                 <th><?= $value['ten_tt'] ?></th>
                 <th><a href="{{route("admin/don_hang/".$value["id_hd"])}}" class="btn btn-info">Chi tiết đơn hàng</a>
-                    <?php
-                        if($value['trang_thai']!=0 && $value['trang_thai']!=3 && $value['trang_thai'] != 5){
-                            ?>
-                            <a href="?act=editdh&id_hd=<?= $value['id_hd'] ?>" class="btn btn-warning">Trạng thái đơn</a>
-                            <?php
-                        }
-                    ?>
+                    
                 </th>
             </tr>
         <?php
@@ -39,4 +33,34 @@
         ?>
     </tbody>
 </table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <?php
+    if ($pagepre >= 1) {
+    ?>
+        <li class="page-item">
+            <a class="page-link" href="{{ route('admin/don_hang/page/' . $pagepre . '/') }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <?php
+    }
+    ?>
+
+        <?php
+    for ($i = $from; $i <= $to; $i++) {
+    ?>
+        <li class="page-item"><a class="page-link" href="{{ route('admin/don_hang/page/' . $i) }}"><?= $i ?></a></li>
+        <?php } ?>
+        <?php
+    if ($pagenext <= $tongsotrang) {
+    ?>
+        <li class="page-item">
+            <a class="page-link" href="{{ route('admin/don_hang/page/' . $pagenext . '/') }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <?php } ?>
+    </ul>
+</nav>
 @endsection

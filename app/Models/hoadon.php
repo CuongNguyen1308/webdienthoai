@@ -11,8 +11,12 @@ class Hoadon extends db{
         return $this->pdo_query($sql);
     }
     //
-    public function danh_sach_hoa_don(){
-        $sql = "SELECT * from hoa_don inner join trang_thai on trang_thai.id_tt=hoa_don.trang_thai";
+    public function danh_sach_hoa_don($start=0,$row=4){
+        $sql = "SELECT * from hoa_don inner join trang_thai on trang_thai.id_tt=hoa_don.trang_thai LIMIT $start,$row";
+        return $this->pdo_query($sql);
+    }
+    public function phan_trang($start,$row){
+        $sql = "SELECT * FROM hoa_don inner inner join trang_thai on trang_thai.id_tt=hoa_don.trang_thai LIMIT $start,$row";
         return $this->pdo_query($sql);
     }
     public function getone_hoadon($id_hd){
@@ -80,5 +84,10 @@ class Hoadon extends db{
     public function san_pham_ban_chay(){
         $sql = "SELECT cthd.id_sp as id_sp, sp.ten_sp as ten_sp, SUM(cthd.so_luong) as so_luong_ban, SUM(cthd.gia_ban) as doanh_thu FROM chi_tiet_hoa_don as cthd INNER JOIN san_pham as sp on cthd.id_sp = sp.id_sp INNER JOIN hoa_don as hd on cthd.id_hd = hd.id_hd WHERE hd.trang_thai = 5 GROUP BY cthd.id_sp ORDER BY doanh_thu desc LIMIT 0,5";
         return $this->pdo_query($sql);
+    }
+
+    public function tong_trang(){
+        $sql = "SELECT COUNT(*) as tongrecord FROM hoa_don";
+        return $this->pdo_query_one($sql);
     }
 }

@@ -18,7 +18,7 @@
 				<form class="login" method="post">
 					<div class="login__field">
 						<i class="login__icon fas fa-user"></i>
-						<input type="text" class="login__input" name="email" placeholder="Email">
+						<input type="text" class="login__input" name="email" placeholder="Email" old="{{ $email }}">
 					</div>
 					<div class="login__field">
 						<i class="login__icon fas fa-lock"></i>

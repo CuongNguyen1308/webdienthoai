@@ -4,7 +4,7 @@
     const USERNAME = 'root';
     const PASSWORD = '';
 
-    const BASE_URL = "http://localhost/php2/asm/";
+    const BASE_URL = "http://localhost/webdienthoai/";
 
     function route($url){
         return BASE_URL.$url;

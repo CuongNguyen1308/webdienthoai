@@ -8,12 +8,12 @@ use App\Models\Chitietsanpham;
 use App\Models\Danhmuc;
 use App\Models\Giohang;
 use App\Models\Hoadon;
-use App\Models\Product;
+use App\Models\Sanpham;
 use App\Models\Taikhoan;
 
 class ProductController extends BaseController
 {
-    protected $productModel;
+    protected $sanphamModel;
     protected $danhmucModel;
     protected $taikhoanModel;
     protected $chitietsanphamModel;
@@ -23,7 +23,7 @@ class ProductController extends BaseController
 
     public function __construct()
     {
-        $this->productModel = new Product();
+        $this->sanphamModel = new Sanpham();
         $this->danhmucModel = new Danhmuc();
         $this->giohangModel = new Giohang();
         $this->binhluanModel = new Binhluan();
@@ -36,8 +36,8 @@ class ProductController extends BaseController
     {
         $title = "Trang chủ";
         $danhmuc = $this->danhmucModel->danhsach_danhmuc();
-        $khuyenmai = $this->productModel->khuyen_mai();
-        $sanpham = $this->productModel->san_pham();
+        $khuyenmai = $this->sanphamModel->khuyen_mai();
+        $sanpham = $this->sanphamModel->san_pham();
         $this->render('user.trangchu', compact('title', 'khuyenmai', 'sanpham', 'danhmuc'));
     }
     public function san_pham()
@@ -45,8 +45,8 @@ class ProductController extends BaseController
         $title = "Sản phẩm";
         $danhmuc = $this->danhmucModel->danhsach_danhmuc();
 
-        $top_5 = $this->productModel->top5();
-        $tongrecord = $this->productModel->tong_trang();
+        $top_5 = $this->sanphamModel->top5();
+        $tongrecord = $this->sanphamModel->tong_trang();
         if (!isset($_GET['page'])) $page = 1;
         $row = 12;
         $start = ($page - 1) * $row;
@@ -58,34 +58,34 @@ class ProductController extends BaseController
         if ($to > $tongsotrang) $to = $tongsotrang;
         $pagenext = $page + 1;
         $pagepre = $page - 1;
-        $sanpham = $this->productModel->phan_trang($start, $row);
+        $sanpham = $this->sanphamModel->phan_trang($start, $row);
         $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
     }
     public function chi_tiet_san_pham($id_sp)
     {
-        $sanpham = $this->productModel->getById($id_sp);
+        $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->productModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
         $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq'));
     }
     public function chi_tiet_san_pham_cau_hinh($id_sp, $id_ctsp)
     {
-        $sanpham = $this->productModel->getById($id_sp);
+        $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->productModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
         $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq', 'id_ctsp'));
     }
     public function mua_sp($id_sp)
     {
-        $sanpham = $this->productModel->getById($id_sp);
+        $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->productModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
         if (!isset($_POST['mua_ngay'])) {
             $thong_bao = 'Chọn cấu hình đi chứ ';
             $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
@@ -97,14 +97,14 @@ class ProductController extends BaseController
     }
     public function mua_san_pham($id_sp, $id_ctsp)
     {
-        $sanpham = $this->productModel->getById($id_sp);
+        $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->productModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
         if (isset($_POST['mua_ngay'])) {
             if ($id_ctsp != 0) {
-                $sp = $this->productModel->getById($id_sp);
+                $sp = $this->sanphamModel->getById($id_sp);
                 $_SESSION['san_pham'] = $sp;
                 $_SESSION['ctsp'] = $this->chitietsanphamModel->getone_ctsp($id_ctsp);
                 $_SESSION['so_luong'] = $_POST['so_luong'];
@@ -152,8 +152,8 @@ class ProductController extends BaseController
     {
         $title = "Sản phẩm";
         $danhmuc = $this->danhmucModel->danhsach_danhmuc();
-        $top_5 = $this->productModel->top5();
-        $tongrecord = $this->productModel->tong_trang();
+        $top_5 = $this->sanphamModel->top5();
+        $tongrecord = $this->sanphamModel->tong_trang();
 
         $row = 12;
         $start = ($page - 1) * $row;
@@ -165,7 +165,7 @@ class ProductController extends BaseController
         if ($to > $tongsotrang) $to = $tongsotrang;
         $pagenext = $page + 1;
         $pagepre = $page - 1;
-        $sanpham = $this->productModel->phan_trang($start, $row);
+        $sanpham = $this->sanphamModel->phan_trang($start, $row);
         $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
     }
 

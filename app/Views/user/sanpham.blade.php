@@ -129,6 +129,7 @@
                 </select>
             </form>
         </div>
+        {{-- data --}}
         <div class="row filter_data">
             <div class="product">
                 <div class="row row-cols-4 g-2 py-2">
@@ -160,6 +161,7 @@
                 </div>
             </div>
         </div>
+        {{-- Phân trang --}}
         <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <?php
