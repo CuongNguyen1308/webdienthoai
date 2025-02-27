@@ -21,11 +21,11 @@ class db
 
     //lấy dữ liệu từ trong CSDL, nhận tham số đầu vào 
     //là câu truy vấn SQL
-    public function pdo_query($sql)
+    public function pdo_query($sql, $params = [])
     {
         $conn = $this->getConnect(); //khởi tạo kết nối vs CSDL
         $stmt = $conn->prepare($sql);
-        $stmt->execute();
+        $stmt->execute($params);
 
         return $stmt->fetchAll();
     }

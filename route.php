@@ -9,6 +9,7 @@ use App\Controllers\User\ProductController as UserController;
 use App\Controllers\Admin\ProductController;
 use App\Controllers\Admin\CategoryController;
 use App\Controllers\Admin\CommentController;
+use App\Controllers\User\AjaxController;
 
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $router = new RouteCollector();
@@ -61,6 +62,8 @@ $router->get('dat_hang',[UserController::class,"view_thong_tin"]);
 $router->post('dat_hang',[UserController::class,"dat_hang"]);
 $router->get('don_hang',[UserController::class,'don_hang']);
 $router->get('san_pham/page/{page}/',[UserController::class,"phan_trang"]);
+
+$router->post('filter_product',[AjaxController::class,'filter']);
 
 $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
     $router->get('/',[ProductController::class, "san_pham"]);

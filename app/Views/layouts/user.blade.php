@@ -220,8 +220,6 @@
 
 
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- <script src="../assets/js/admin.js"></script> -->
     <!-- footer -->
     <footer class="bg-dark text-white py-4 mt-5">
@@ -278,7 +276,7 @@
                     <p class="m-0">Địa chỉ: Fpt</p>
                 </div>
                 <div class="col-md-6">
-                    @copyright 2023
+                    @copyright 2025
                     <br>
                     <div>
                         <span class="box50 border mr-3 bg-light" style="color: #000000;"><i class="fa-brands fa-square-facebook"></i></span>

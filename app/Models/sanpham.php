@@ -108,4 +108,38 @@ class Sanpham extends db
         $sql = "SELECT COUNT(*) as tongrecord FROM san_pham";
         return $this->pdo_query_one($sql);
     }
+    public function ajaxLocSanPham($filters)
+    {
+        $where = '1';
+        $loc = '';
+
+        // Lọc theo giá
+        if (!empty($filters['min_price']) && !empty($filters['max_price'])) {
+            $min_price = (int) $filters['min_price'];
+            $max_price = (int) $filters['max_price'];
+            $where .= " AND san_pham.gia_goc BETWEEN $min_price AND $max_price";
+        }
+
+        // Lọc theo danh mục
+        if (!empty($filters['danh_muc']) && is_array($filters['danh_muc'])) {
+            $danh_muc = array_map('intval', $filters['danh_muc']); // Ép kiểu số nguyên
+            $category_list = implode(',', $danh_muc);
+            $where .= " AND san_pham.id_dm IN ($category_list)";
+        }
+
+        // Sắp xếp
+        if (!empty($filters['sort'])) {
+            if ($filters['sort'] == 'thap-cao') {
+                $loc = " ORDER BY san_pham.gia_goc ASC";
+            } elseif ($filters['sort'] == 'cao-thap') {
+                $loc = " ORDER BY san_pham.gia_goc DESC";
+            }
+        }
+
+        // Tạo truy vấn SQL hoàn chỉnh
+        $sql = "SELECT * FROM san_pham INNER JOIN danh_muc ON danh_muc.id_dm = san_pham.id_dm 
+        WHERE $where $loc LIMIT 12";
+
+        return $this->pdo_query($sql);
+    }
 }
