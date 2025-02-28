@@ -61,13 +61,37 @@ class ProductController extends BaseController
         $sanpham = $this->sanphamModel->phan_trang($start, $row);
         $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
     }
+    public function danh_muc($id_dm)
+    {
+        $title = "Sản phẩm theo danh mục";
+        $danhmuc = $this->danhmucModel->danhsach_danhmuc();
+
+        $top_5 = $this->sanphamModel->top5();
+        $tongrecord = $this->sanphamModel->tong_trang($id_dm);
+        if (!isset($_GET['page'])) $page = 1;
+        $row = 12;
+        $start = ($page - 1) * $row;
+        $offset = 3;
+        $tongsotrang = ceil($tongrecord['tongrecord'] / $row);
+        $from = $page - $offset;
+        if ($from < 1) $from = 1;
+        $to = $page + $offset;
+        if ($to > $tongsotrang) $to = $tongsotrang;
+        $pagenext = $page + 1;
+        $pagepre = $page - 1;
+        $sanpham = $this->sanphamModel->phan_trang($start, $row,$id_dm);
+        
+        $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
+    }
     public function chi_tiet_san_pham($id_sp)
     {
         $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
+
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
         $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+
         $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq'));
     }
     public function chi_tiet_san_pham_cau_hinh($id_sp, $id_ctsp)
@@ -79,58 +103,24 @@ class ProductController extends BaseController
         $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
         $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq', 'id_ctsp'));
     }
-    public function mua_sp($id_sp)
+    public function gui_du_lieu($id_sp)
     {
+        
         $sanpham = $this->sanphamModel->getById($id_sp);
-        $title = $sanpham['ten_sp'];
-        $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
-        $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
-        if (!isset($_POST['mua_ngay'])) {
-            $thong_bao = 'Chọn cấu hình đi chứ ';
-            $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
-        }
-        if (!isset($_POST['them_vao_gio'])) {
-            $thong_bao = 'Chưa chọn cấu hình';
-            $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
-        }
-    }
-    public function mua_san_pham($id_sp, $id_ctsp)
-    {
-        $sanpham = $this->sanphamModel->getById($id_sp);
-        $title = $sanpham['ten_sp'];
-        $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
-        $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
-        $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
+        
         if (isset($_POST['mua_ngay'])) {
-            if ($id_ctsp != 0) {
-                $sp = $this->sanphamModel->getById($id_sp);
-                $_SESSION['san_pham'] = $sp;
-                $_SESSION['ctsp'] = $this->chitietsanphamModel->getone_ctsp($id_ctsp);
-                $_SESSION['so_luong'] = $_POST['so_luong'];
-                header('location:' . route("dat_hang"));
-            } else {
-                $thong_bao = 'Chọn cấu hình đi chứ ';
-                $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq', 'id_ctsp'));
-            }
+            // $thong_bao = 'Chọn cấu hình đi chứ ';
+            $_SESSION['san_pham'] = $sanpham;
+            $_SESSION['ctsp'] = $this->chitietsanphamModel->getone_ctsp($_POST['id_ctsp'][0]);
+            $_SESSION['so_luong'] = $_POST['so_luong'][0];
+            header('location:' . route("dat_hang"));
         }
         if (isset($_POST['them_vao_gio'])) {
-            if (isset($id_ctsp)) {
-                $check_ctsp = check_ctsp($_GET['id_ctsp'], $_SESSION['login']['id_user']);
-                if (is_array($check_ctsp) && $check_ctsp != 0) {
-                    $so_luong = $_POST['so_luong'] + $check_ctsp['so_luong'];
-                    cong_sp($_GET['id_ctsp'], $so_luong, $_SESSION['login']['id_user']);
-                    header('location:' . route(""));
-                } else {
-                    add_giohang($_GET['id_ctsp'], $_SESSION['login']['id_user'], $_POST['so_luong']);
-                    header('location:' . route(""));
-                }
-            } else {
-                $thong_bao = 'Chưa chọn cấu hình';
-                $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq', 'id_ctsp'));
-            }
+            // $thong_bao = 'Chưa chọn cấu hình';
+            // $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
         }
     }
+    
     public function view_thong_tin(){
         $title = "Thanh toán sản phẩm";
         $this->render("user.dathang",compact('title'));

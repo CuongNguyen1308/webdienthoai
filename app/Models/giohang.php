@@ -46,4 +46,21 @@ class Giohang extends db
         $sql = "UPDATE gio_hang SET  id_ctsp=$id_ctsp,so_luong=$so_luong WHERE id_gh=$id_gh";
         $this->pdo_execute($sql);
     }
+    public function add_cart($id_ctsp, $id_user, $so_luong)
+    {
+        // Check if the item already exists in the cart
+        $existing_cart_item = $this->check_ctsp($id_ctsp, $id_user);
+
+        if ($existing_cart_item) {
+            // If it exists, update the quantity
+            $new_quantity = $existing_cart_item['so_luong'] + $so_luong;
+            $sql = "UPDATE gio_hang SET so_luong = $new_quantity WHERE id_ctsp = $id_ctsp AND id_user = $id_user";
+            $this->pdo_execute($sql);
+        } else {
+            // If it doesn't exist, add the item to the cart
+            $sql = "INSERT INTO gio_hang(id_ctsp, id_user, so_luong) VALUES($id_ctsp, $id_user, $so_luong)";
+            $this->pdo_execute($sql);
+        }
+    }
+    
 }

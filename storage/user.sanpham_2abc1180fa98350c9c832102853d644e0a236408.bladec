@@ -51,7 +51,7 @@
  <div class="list-group p-2">
  <input type="hidden" id="hidden_minimum_price" value="0">
  <input type="hidden" id="hidden_maximum_price" value="50000000">
- <p id="price_show">Từ: 1000-50000000</p>
+ <p id="price_show">Từ: 1.000-50.000.000</p>
  <div class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" id="price_range">
  </div>
  </div>
@@ -248,12 +248,16 @@
  values: [1000, 50000000],
  step: 10000,
  stop: function(event, ui) {
- $('#price_show').html("Từ: " + ui.values[0] + " - " + ui.values[1]);
+ $('#price_show').html("Từ: " + formatCurrency(ui.values[0]) + " - " + formatCurrency(ui.values[1]));
  $('#hidden_minimum_price').val(ui.values[0]);
  $('#hidden_maximum_price').val(ui.values[1]);
  filter_data();
  }
  });
+
+ function formatCurrency(amount) {
+ return new Intl.NumberFormat('vi-VN').format(amount);
+ }
  });
  </script>
 <?php $this->stopSection(); ?>

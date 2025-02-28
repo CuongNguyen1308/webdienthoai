@@ -10,6 +10,7 @@ use App\Controllers\Admin\ProductController;
 use App\Controllers\Admin\CategoryController;
 use App\Controllers\Admin\CommentController;
 use App\Controllers\User\AjaxController;
+use App\Controllers\User\CartController;
 
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $router = new RouteCollector();
@@ -53,15 +54,21 @@ $router->get('login',[UserController::class,"login"]);
 $router->post('login',[UserController::class,"checklogin"]);
 $router->get('acount',[UserController::class,"acount"]);
 $router->post('acount',[UserController::class,"logout"]);
-$router->get('san_pham',[UserController::class,"san_pham"]);
 $router->get('chi_tiet_san_pham/{id_sp}/',[UserController::class,"chi_tiet_san_pham"]);
-$router->post('chi_tiet_san_pham/{id_sp}/',[UserController::class,"mua_sp"]);
-$router->get('chi_tiet_san_pham/{id_sp}/{id_ctsp}',[UserController::class,"chi_tiet_san_pham_cau_hinh"]);
-$router->post('chi_tiet_san_pham/{id_sp}/{id_ctsp}',[UserController::class,"mua_san_pham"]);
+$router->post('chi_tiet_san_pham/{id_sp}/',[UserController::class,"gui_du_lieu"]);
+
+$router->get('gio_hang',[CartController::class,"gio_hang"]);
+$router->post('add_cart',[AjaxController::class,"add_cart"]);
+$router->post('updateQuantity',[AjaxController::class,"updateQuantity"]);
+$router->get('gio_hang/{id}/delete', [CartController::class,'delete']);
+
 $router->get('dat_hang',[UserController::class,"view_thong_tin"]);
 $router->post('dat_hang',[UserController::class,"dat_hang"]);
 $router->get('don_hang',[UserController::class,'don_hang']);
+
+$router->get('san_pham',[UserController::class,"san_pham"]);
 $router->get('san_pham/page/{page}/',[UserController::class,"phan_trang"]);
+$router->get('san_pham/{id_dm}/',[UserController::class,"danh_muc"]);
 
 $router->post('filter_product',[AjaxController::class,'filter']);
 

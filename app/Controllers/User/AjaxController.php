@@ -43,7 +43,7 @@ class AjaxController extends BaseController
             'sort' => $_POST['sort'] ?? '',
             'page' => $_POST['page'] ?? 1
         ];
-        
+
         $products = $this->sanphamModel->ajaxLocSanPham($filters);
         // var_dump($this->sanphamModel->ajaxLocSanPham($filters));
         // die;
@@ -51,7 +51,7 @@ class AjaxController extends BaseController
             $output .= '
             <div class="col">
                             <div class="card position-relative" style="width: 14rem; height: 420px;">
-                                <img src="'. BASE_URL .'public/uploads/' . $value['hinh'] . '" class="card-img-top"
+                                <img src="' . BASE_URL . 'public/uploads/' . $value['hinh'] . '" class="card-img-top"
                                     alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">' . $value['ten_sp'] . '</h5>
@@ -63,7 +63,7 @@ class AjaxController extends BaseController
                                             class="text-decoration-line-through">' . number_format($value['gia_goc']) . '</span>
                                     </div>
                                     <p class="card-text " style="width = 100%; height = 50px;">' . $value['mo_ta'] . '</p>
-                                    <a href="{{ route("chi_tiet_san_pham/' . $value['id_sp'] . '/") }}"
+                                    <a href="' . route('chi_tiet_san_pham/' . $value['id_sp'] . '/') . '"
                                         class="btn btn-primary position-absolute bottom-0 start-50 translate-middle-x"
                                         style="margin-bottom:20px;">Mua ngay</a>
                                 </div>
@@ -75,5 +75,29 @@ class AjaxController extends BaseController
         // return json_encode([
         //     'sanpham' => $products,
         // ]);
+    }
+    public function add_cart()
+    {
+        $id_ctsp = $_POST['id_ctsp'];
+        $id_user = $_SESSION['user']['id_user'];
+        $so_luong = $_POST['so_luong'];
+
+        if (empty($id_ctsp) || empty($id_user) || empty($so_luong)) {
+            // Xử lý lỗi nếu có
+            echo "Tất cả các trường là bắt buộc!";
+            return;
+        }
+
+        $this->giohangModel->add_cart($id_ctsp, $id_user, $so_luong);
+
+        echo "Thêm thành công vào giỏ hàng";
+    }
+    public function updateQuantity() {
+        $id_ctsp = $_POST['id_ctsp'];
+        $so_luong = $_POST['so_luong'];
+        $id_gh = $_POST['id_gh'];
+
+        $this->giohangModel->update_giohang($id_gh,$id_ctsp,$so_luong);
+        return json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
     }
 }

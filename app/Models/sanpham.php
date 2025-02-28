@@ -20,6 +20,13 @@ class Sanpham extends db
 
         return $this->pdo_query($query);
     }
+    public function san_pham_dm($id_dm)
+    {
+
+        $query = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm where san_pham.id_dm = $id_dm limit 0,12";
+
+        return $this->pdo_query($query);
+    }
     public function getById($id_sp)
     {
         $query = "SELECT * FROM san_pham WHERE id_sp = $id_sp";
@@ -98,14 +105,22 @@ class Sanpham extends db
         $sql = "SELECT * FROM san_pham WHERE id_dm = $id_dm AND id_sp != $id_sp LIMIT 0,4";
         return $this->pdo_query($sql);
     }
-    public function phan_trang($start, $row)
+    public function phan_trang($start, $row,$id_dm=null)
     {
-        $sql = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm LIMIT $start,$row";
+        $where = "where 1 ";
+        if(isset($id_dm)){
+            $where .= " and san_pham.id_dm = $id_dm";
+        }
+        $sql = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm $where LIMIT $start,$row";
         return $this->pdo_query($sql);
     }
-    public function tong_trang()
+    public function tong_trang($id_dm=null)
     {
-        $sql = "SELECT COUNT(*) as tongrecord FROM san_pham";
+        $where = "where 1 ";
+        if(isset($id_dm)){
+            $where .= " and san_pham.id_dm = $id_dm";
+        }
+        $sql = "SELECT COUNT(*) as tongrecord FROM san_pham $where";
         return $this->pdo_query_one($sql);
     }
     public function ajaxLocSanPham($filters)
