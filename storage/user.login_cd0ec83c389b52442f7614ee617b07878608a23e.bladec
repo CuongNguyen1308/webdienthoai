@@ -2,23 +2,31 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title><?php echo \htmlentities($title??'', ENT_QUOTES, 'UTF-8', false); ?></title>
-	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
-	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
-	<link rel="stylesheet" href="<?php echo \htmlentities(BASE_URL.'public/css/login.css?v='.time()??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <meta charset="UTF-8">
+ <title><?php echo \htmlentities($title??'', ENT_QUOTES, 'UTF-8', false); ?></title>
+ <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+ <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'>
+ <link rel="stylesheet" href="<?php echo \htmlentities(BASE_URL . 'public/css/login.css?v=' . time()??'', ENT_QUOTES, 'UTF-8', false); ?>">
 
 </head>
 
 <body>
-	<!-- partial:index.partial.html -->
-	<div class="container">
+ <!-- partial:index.partial.html -->
+ <div class="container">
+
  <div class="screen">
  <div class="screen__content">
+ <?php if(isset($_SESSION['success_message'])): ?>
+ <div class="alert alert-success">
+ <?php echo \htmlentities($_SESSION['success_message']??'', ENT_QUOTES, 'UTF-8', false); ?>
+
+ </div>
+ <?php unset($_SESSION['success_message']);  ?>
+ <?php endif; ?>
  <form class="login" method="post">
  <div class="login__field">
  <i class="login__icon fas fa-user"></i>
- <input type="text" class="login__input" name="email" placeholder="Email" old="<?php echo \htmlentities($email??'', ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type="text" class="login__input" name="email" placeholder="Email">
  </div>
  <div class="login__field">
  <i class="login__icon fas fa-lock"></i>
@@ -28,12 +36,11 @@
  <h6 style="color:red"><?php echo \htmlentities($thongbao??'', ENT_QUOTES, 'UTF-8', false); ?></h6>
  </div>
  <button class="button login__submit">
- <span class="button__text" name="btnsubmit">Log In Now</span>
+ <span class="button__text" name="btnsubmit">Đăng nhập</span>
  <i class="button__icon fas fa-chevron-right"></i>
  </button>
  <div class="register-forget opacity">
- <a href="">REGISTER</a>
- <a href="">FORGOT PASSWORD</a>
+ <a href="<?php echo \htmlentities(route('dang_ky')??'', ENT_QUOTES, 'UTF-8', false); ?>">Đăng ký ngay</a>
  </div>
  </form>
  <div class="social-login">
@@ -52,8 +59,8 @@
  <span class="screen__background__shape screen__background__shape1"></span>
  </div>
  </div>
-	</div>
-	<!-- partial -->
+ </div>
+ <!-- partial -->
 
 </body>
 

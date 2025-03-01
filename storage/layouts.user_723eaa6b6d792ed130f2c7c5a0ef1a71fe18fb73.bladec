@@ -69,7 +69,7 @@
  if (isset($_SESSION['user'])) {
  echo '<a href=' . route('acount') . " class='text-danger'>" . $_SESSION['user']['ho_ten'] . '</a>';
  } else {
- echo '<a href=' . route('login') . " class='text-danger'>Đăng nhập</a>";
+ echo '<a href=' . route('dang_nhap') . " class='text-danger'>Đăng nhập</a>";
  }
  ?>
  </div>

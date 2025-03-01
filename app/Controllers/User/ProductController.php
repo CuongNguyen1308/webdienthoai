@@ -79,8 +79,8 @@ class ProductController extends BaseController
         if ($to > $tongsotrang) $to = $tongsotrang;
         $pagenext = $page + 1;
         $pagepre = $page - 1;
-        $sanpham = $this->sanphamModel->phan_trang($start, $row,$id_dm);
-        
+        $sanpham = $this->sanphamModel->phan_trang($start, $row, $id_dm);
+
         $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
     }
     public function chi_tiet_san_pham($id_sp)
@@ -105,9 +105,9 @@ class ProductController extends BaseController
     }
     public function gui_du_lieu($id_sp)
     {
-        
+
         $sanpham = $this->sanphamModel->getById($id_sp);
-        
+
         if (isset($_POST['mua_ngay'])) {
             // $thong_bao = 'Chọn cấu hình đi chứ ';
             $_SESSION['san_pham'] = $sanpham;
@@ -120,12 +120,14 @@ class ProductController extends BaseController
             // $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
         }
     }
-    
-    public function view_thong_tin(){
+
+    public function view_thong_tin()
+    {
         $title = "Thanh toán sản phẩm";
-        $this->render("user.dathang",compact('title'));
+        $this->render("user.dathang", compact('title'));
     }
-    public function dat_hang(){
+    public function dat_hang()
+    {
         if (isset($_POST['dat_hang'])) {
             $ngay = date('Y-m-d');
             $id_hd = $this->hoadonModel->add_hoadon($_SESSION['user']['id_user'], $_POST['ho_ten'], $_POST['email'], $_POST['so_dien_thoai'], $_POST['dia_chi'], $ngay);
@@ -133,10 +135,11 @@ class ProductController extends BaseController
             header('location:' . route(""));
         }
     }
-    public function don_hang(){
+    public function don_hang()
+    {
         $title = "Đơn hàng của bạn";
         $ds_hd = $this->hoadonModel->danh_sach_cthd($_SESSION['user']['id_user']);
-        $this->render("user.donhang",compact('ds_hd','title'));
+        $this->render("user.donhang", compact('ds_hd', 'title'));
     }
     public function phan_trang($page)
     {
@@ -173,8 +176,37 @@ class ProductController extends BaseController
             $_SESSION['user'] = $login;
             header('location:' . route(""));
         } else {
-            $thongbao = 'tài khoản hoặc mật khẩu không hợp lệ';
+            $thongbao = 'Tài khoản hoặc mật khẩu không hợp lệ';
             $this->render('user.login', compact('thongbao'));
+        }
+    }
+    public function register()
+    {
+        $title = "Đăng ký";
+        $this->render('user.register', compact('title'));
+    }
+    public function checkRegister()
+    {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $re_password = $_POST['re_password'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
+        
+        $check = $this->taikhoanModel->check($email);
+        if($check){
+            $thongbao = 'Email đã tồn tại';
+            $this->render('user.register', compact('thongbao'));
+            return;
+        }
+        if ($password == $re_password ) {
+            $this->taikhoanModel->register($name, $email, $phone, $password, $address);
+            $_SESSION['success_message'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
+            header('location:' . route("dang_nhap"));
+        } else {
+            $thongbao = 'Mật khẩu phải trùng nhau';
+            $this->render('user.register', compact('thongbao'));
         }
     }
     public function acount()

@@ -34,7 +34,7 @@ $router = new RouteCollector();
 //khởi tạo filter để kiểm tra đăng nhập cho 1 số route nhất định
 $router->filter('auth', function () {
     if (!isset($_SESSION['user'])) {
-        header('location:'.route("login"));
+        header('location:'.route("dang_nhap"));
         return false;
     }
 });
@@ -50,8 +50,12 @@ $router->filter('auth', function () {
  * filter group: filter cho cả group, các route con cũng sẽ đc áp dụng filter
  */
 $router->get('',[UserController::class,"trang_chu"]);
-$router->get('login',[UserController::class,"login"]);
-$router->post('login',[UserController::class,"checklogin"]);
+$router->get('dang_nhap',[UserController::class,"login"]);
+$router->post('dang_nhap',[UserController::class,"checklogin"]);
+
+$router->get('dang_ky',[UserController::class,"register"]);
+$router->post('dang_ky',[UserController::class,"checkregister"]);
+
 $router->get('acount',[UserController::class,"acount"]);
 $router->post('acount',[UserController::class,"logout"]);
 $router->get('chi_tiet_san_pham/{id_sp}/',[UserController::class,"chi_tiet_san_pham"]);
@@ -60,6 +64,7 @@ $router->post('chi_tiet_san_pham/{id_sp}/',[UserController::class,"gui_du_lieu"]
 $router->get('gio_hang',[CartController::class,"gio_hang"]);
 $router->post('add_cart',[AjaxController::class,"add_cart"]);
 $router->post('updateQuantity',[AjaxController::class,"updateQuantity"]);
+$router->post('updateVariant',[AjaxController::class,"updateVariant"]);
 $router->get('gio_hang/{id}/delete', [CartController::class,'delete']);
 
 $router->get('dat_hang',[UserController::class,"view_thong_tin"]);

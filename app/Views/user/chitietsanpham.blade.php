@@ -138,10 +138,10 @@
                                     vào
                                     giỏ hàng</button></div>
                         @else
-                            <div class="col"><a href="{{ route('login') }}" class="btn btn-danger"
+                            <div class="col"><a href="{{ route('dang_nhap') }}" class="btn btn-danger"
                                     style="width: 100%;padding: 20px" >Mua
                                     ngay</a></div>
-                            <div class="col"><a href="{{ route('login') }}" class="btn btn-primary"
+                            <div class="col"><a href="{{ route('dang_nhap') }}" class="btn btn-primary"
                                     style="width: 100%;padding: 20px">Thêm
                                     vào giỏ hàng</a></div>
                         @endif

@@ -10,7 +10,7 @@ class Taikhoan extends db{
         $sql = "SELECT * FROM tai_khoan WHERE id_user = $id_user";
         return $this->pdo_query_one($sql);
     }
-    public function add_taikhoan($ho_ten,$email,$mat_khau,$so_dien_thoai,$dia_chi,$hinh){
+    public function add_taikhoan($ho_ten,$email,$mat_khau,$so_dien_thoai,$dia_chi,$hinh = null){
         $sql = "INSERT INTO tai_khoan(ho_ten,email,mat_khau,so_dien_thoai,dia_chi,hinh) VALUE($ho_ten,$email,$mat_khau,$so_dien_thoai,$dia_chi,$hinh)";
         $this->pdo_execute($sql);
     }
@@ -31,11 +31,12 @@ class Taikhoan extends db{
         return $this->pdo_query_one($sql);
     }
     public function check($email){
-        $sql = "SELECT email FROM tai_khoan WHERE email = $email ";
+        $sql = "SELECT email FROM tai_khoan WHERE email = '$email' ";
         return $this->pdo_query_one($sql);
     }
-    public function register($ho_ten,$email,$so_dien_thoai,$mat_khau){
-        $sql = "INSERT INTO tai_khoan(ho_ten,email,so_dien_thoai,mat_khau) VALUE($ho_ten,$email,$so_dien_thoai,$mat_khau)";
+    public function register($ho_ten,$email,$so_dien_thoai,$mat_khau,$dia_chi){
+        $sql = "INSERT INTO tai_khoan(ho_ten,email,so_dien_thoai,mat_khau,dia_chi) VALUE('$ho_ten','$email','$so_dien_thoai','$mat_khau','$dia_chi')";
         $this->pdo_execute($sql);
     }
+    
 }

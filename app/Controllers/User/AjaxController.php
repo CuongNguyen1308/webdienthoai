@@ -98,6 +98,22 @@ class AjaxController extends BaseController
         $id_gh = $_POST['id_gh'];
 
         $this->giohangModel->update_giohang($id_gh,$id_ctsp,$so_luong);
-        return json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
+        echo json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
+    }
+    public function updateVariant(){
+        $id_ctsp = $_POST['id_ctsp'];
+        $so_luong = $_POST['so_luong'];
+        $so_luong_max = $_POST['so_luong_max'];
+        $id_gh = $_POST['id_gh'];
+        $id_user = $_SESSION['user']['id_user'];
+
+        if (empty($id_ctsp) || empty($id_user) || empty($so_luong) || empty($id_gh)) {
+            // Xử lý lỗi nếu có
+            echo "Tất cả các trường là bắt buộc!";
+            return;
+        }
+
+        $this->giohangModel->updateVariant($id_user,$id_gh,$id_ctsp,$so_luong,$so_luong_max);
+        echo json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
     }
 }
