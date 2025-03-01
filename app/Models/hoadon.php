@@ -44,7 +44,27 @@ class Hoadon extends db{
         $this->pdo_execute($sql);
     }
     public function danh_sach_cthd($id_user){
-        $sql = "SELECT hd.ngay_dat as ngay_dat, cthd.id_cthd as id_cthd,cthd.id_hd as id_hd, sp.ten_sp as ten_sp,cthd.mau_sac as mau_sac,cthd.dung_luong as dung_luong,cthd.so_luong as so_luong,cthd.gia_ban as gia_ban, hd.ho_ten as ho_ten,hd.so_dien_thoai as so_dien_thoai,hd.dia_chi as dia_chi, tt.ten_tt as trang_thai,tt.id_tt as id_tt,sp.hinh as hinh FROM chi_tiet_hoa_don as cthd INNER JOIN hoa_don as hd on cthd.id_hd = hd.id_hd INNER JOIN san_pham as sp on cthd.id_sp=sp.id_sp INNER JOIN trang_thai as tt on hd.trang_thai=tt.id_tt WHERE hd.id_user = $id_user ORDER BY hd.id_hd desc";
+        $sql = "SELECT 
+            hd.id_hd AS id_hd, 
+            hd.ngay_dat AS ngay_dat, 
+            hd.ho_ten AS ho_ten,
+            hd.so_dien_thoai AS so_dien_thoai,
+            hd.dia_chi AS dia_chi, 
+            tt.ten_tt AS trang_thai,
+            tt.id_tt AS id_tt,
+            SUM(cthd.gia_ban * cthd.so_luong) AS tong_tien,
+            GROUP_CONCAT(
+                CONCAT(sp.ten_sp, ' - ', cthd.mau_sac, ' - ', cthd.dung_luong, ' - SL:', cthd.so_luong, ' - Giá:', cthd.gia_ban) 
+                SEPARATOR ' | '
+            ) AS danh_sach_san_pham
+        FROM chi_tiet_hoa_don AS cthd 
+        INNER JOIN hoa_don AS hd ON cthd.id_hd = hd.id_hd 
+        INNER JOIN san_pham AS sp ON cthd.id_sp = sp.id_sp 
+        INNER JOIN trang_thai AS tt ON hd.trang_thai = tt.id_tt 
+        WHERE hd.id_user = $id_user 
+        GROUP BY hd.id_hd
+        ORDER BY hd.id_hd DESC";
+
         return $this->pdo_query($sql);
     }
     public function dscthd($id_hd){

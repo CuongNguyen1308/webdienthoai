@@ -62,6 +62,7 @@ $router->get('chi_tiet_san_pham/{id_sp}/',[UserController::class,"chi_tiet_san_p
 $router->post('chi_tiet_san_pham/{id_sp}/',[UserController::class,"gui_du_lieu"]);
 
 $router->get('gio_hang',[CartController::class,"gio_hang"]);
+$router->post('gio_hang',[CartController::class,"checkout"]);
 $router->post('add_cart',[AjaxController::class,"add_cart"]);
 $router->post('updateQuantity',[AjaxController::class,"updateQuantity"]);
 $router->post('updateVariant',[AjaxController::class,"updateVariant"]);
@@ -69,7 +70,12 @@ $router->get('gio_hang/{id}/delete', [CartController::class,'delete']);
 
 $router->get('dat_hang',[UserController::class,"view_thong_tin"]);
 $router->post('dat_hang',[UserController::class,"dat_hang"]);
+
+$router->get('dat_hang_ngay',[UserController::class,"dat_ngay"]);
+$router->post('dat_hang_ngay',[UserController::class,"dat_hang_ngay"]);
+
 $router->get('don_hang',[UserController::class,'don_hang']);
+$router->get('don_hang/{id_hd}',[UserController::class,'chi_tiet_don_hang']);
 
 $router->get('san_pham',[UserController::class,"san_pham"]);
 $router->get('san_pham/page/{page}/',[UserController::class,"phan_trang"]);

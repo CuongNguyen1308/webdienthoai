@@ -1,45 +1,39 @@
 @extends('layouts.user')
 @section('content')
-<h4>Hồ sơ của tôi</h4>
-<p>Quản lý hồ sơ</p>
+<h4 class="fw-bold">Hồ sơ của tôi</h4>
+<p class="text-muted">Quản lý hồ sơ</p>
 <hr>
 <div class="row">
-    <div class="avatar d-flex justify-content-center">
-        <img src="{{BASE_URL}}public/uploads/<?= $_SESSION['user']['hinh'] ?>" alt="" style="border-radius: 50%; height: 100px;">
+    <div class="col-12 d-flex justify-content-center mb-3">
+        <img src="{{BASE_URL}}public/uploads/{{ $_SESSION['user']['hinh'] }}" alt="Avatar" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
     </div>
-    <div class="col-md-12 ">
-        <label for="validationCustom01" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="validationCustom01" value="<?= $_SESSION['user']['ho_ten'] ?>" disabled>
+    <div class="col-md-12 mb-3">
+        <label class="form-label fw-semibold">Họ và Tên</label>
+        <input type="text" class="form-control" value="<?= $_SESSION['user']['ho_ten'] ?>" disabled>
     </div>
-    <div class="col-md-12 ">
-        <label for="validationCustom01" class="form-label">Địa chỉ</label>
-        <input type="text" class="form-control" id="validationCustom01" value="<?= $_SESSION['user']['dia_chi'] ?>" disabled>
+    <div class="col-md-12 mb-3">
+        <label class="form-label fw-semibold">Địa chỉ</label>
+        <input type="text" class="form-control" value="<?= $_SESSION['user']['dia_chi'] ?>" disabled>
     </div>
-    <div class="col-md-12 ">
-        <label for="validationCustom01" class="form-label">Số điện thoại</label>
-        <input type="text" class="form-control" id="validationCustom01" value="<?= $_SESSION['user']['so_dien_thoai'] ?>" disabled>
+    <div class="col-md-12 mb-3">
+        <label class="form-label fw-semibold">Số điện thoại</label>
+        <input type="text" class="form-control" value="<?= $_SESSION['user']['so_dien_thoai'] ?>" disabled>
     </div>
-    <div class="col-md-12 ">
-        <label for="validationCustom01" class="form-label">Email</label>
-        <input type="text" class="form-control" id="validationCustom01" value="<?= $_SESSION['user']['email'] ?>" disabled>
+    <div class="col-md-12 mb-3">
+        <label class="form-label fw-semibold">Email</label>
+        <input type="text" class="form-control" value="<?= $_SESSION['user']['email'] ?>" disabled>
     </div>
-    <hr class="my-3">
-    <h5><a href="?act=cap-nhat-tk" class="btn btn-info">Cập nhật tài khoản</a></h5>
-    <!--  -->
-    
-    <!--  -->
 </div>
-<hr class="my-3">
-<div class="logout d-flex justify-content-between">
-    <?php
-    if (isset($_SESSION['user'])) {
-        if ($_SESSION['user']['phan_quyen'] == 0) {
-            echo '<a class="btn btn-warning" href='.route('admin').'>Chuyển sang trang quản trị</a>';
-        }
-    }
-    ?>
-    <form action="" method="post">
-        <button class="btn btn-primary" name="logout">Đăng xuất tài khoản</button>
-    </form>
+<hr class="my-4">
+<div class="d-flex justify-content-between align-items-center">
+    <a href="?act=cap-nhat-tk" class="btn btn-info px-4">Cập nhật tài khoản</a>
+    <div>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['phan_quyen'] == 0) { ?>
+            <a href="{{ route('admin') }}" class="btn btn-warning px-4">Chuyển sang trang quản trị</a>
+        <?php } ?>
+        <form action="" method="post" class="d-inline">
+            <button class="btn btn-danger px-4" name="logout">Đăng xuất</button>
+        </form>
+    </div>
 </div>
 @endsection

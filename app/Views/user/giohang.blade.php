@@ -11,7 +11,7 @@
 
     <div class="cart-items">
         @if (isset($items))
-            <form action="{{ route('cart.updateAll') }}" method="POST">
+            <form action="{{ route('gio_hang') }}" method="POST">
                 @csrf
                 <table class="table">
                     <thead>
@@ -41,7 +41,7 @@
                             <tr>
                                 <td>
                                     <!-- Checkbox cho từng sản phẩm -->
-                                    <input type="checkbox" name="selected_items[]" value="{{ $item['id_gh'] }}"
+                                    <input type="checkbox" name="id_gh[]" value="{{ $item['id_gh'] }}"
                                         class="product-checkbox">
                                 </td>
                                 <td><img src="{{ BASE_URL }}public/uploads/<?= $item['hinh'] ?>"

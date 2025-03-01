@@ -46,4 +46,11 @@ class CartController extends BaseController
         $_SESSION['success_message'] = "Xóa thành công một sản phẩm!";
         header('location:' . route("gio_hang"));
     }
+    public function checkout(){
+        $dsgh = $this->giohangModel->danhsach_thanhtoan($_POST['id_gh']);
+        $_SESSION['san_pham'] = $dsgh;
+        $_SESSION['cart'] = "true";
+        // var_dump($dsgh);
+        header('location:' . route("dat_hang"));
+    }
 }

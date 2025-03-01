@@ -13,8 +13,20 @@ class Giohang extends db
     }
     public function danhsach_giohang($id_user)
     {
-        $sql = "SELECT gio_hang.id_gh as id_gh, tai_khoan.id_user as id_user, tai_khoan.dia_chi as dia_chi,gio_hang.so_luong as so_luong,chi_tiet_san_pham.id_ctsp as id_ctsp,chi_tiet_san_pham.id_sp as id_sp,chi_tiet_san_pham.dung_luong as dung_luong, chi_tiet_san_pham.mau_sac as mau_sac, chi_tiet_san_pham.so_luong as sl_ctsp,chi_tiet_san_pham.hinh as hinh,san_pham.ten_sp as ten_sp, san_pham.gia_goc as gia_goc , san_pham.giam_gia as giam_gia FROM gio_hang INNER JOIN tai_khoan on gio_hang.id_user = tai_khoan.id_user INNER JOIN chi_tiet_san_pham on gio_hang.id_ctsp=chi_tiet_san_pham.id_ctsp INNER JOIN san_pham on chi_tiet_san_pham.id_sp=san_pham.id_sp WHERE gio_hang.id_user = $id_user";
-        return $this->pdo_query($sql,);
+        $sql = "SELECT gio_hang.id_gh as id_gh, tai_khoan.id_user as id_user, tai_khoan.dia_chi as dia_chi,gio_hang.so_luong as so_luong,chi_tiet_san_pham.id_ctsp as id_ctsp,chi_tiet_san_pham.id_sp as id_sp,chi_tiet_san_pham.dung_luong as dung_luong, chi_tiet_san_pham.mau_sac as mau_sac, chi_tiet_san_pham.so_luong as sl_ctsp,chi_tiet_san_pham.hinh as hinh,san_pham.ten_sp as ten_sp, san_pham.gia_goc as gia_goc , san_pham.giam_gia as giam_gia FROM gio_hang 
+        INNER JOIN tai_khoan on gio_hang.id_user = tai_khoan.id_user 
+        INNER JOIN chi_tiet_san_pham on gio_hang.id_ctsp=chi_tiet_san_pham.id_ctsp 
+        INNER JOIN san_pham on chi_tiet_san_pham.id_sp=san_pham.id_sp WHERE gio_hang.id_user = $id_user";
+        return $this->pdo_query($sql);
+    }
+    public function danhsach_thanhtoan($id_gh_array)
+    {
+        $id_gh_list = implode(',', array_map('intval', $id_gh_array));
+        $sql = "SELECT gio_hang.id_gh as id_gh, tai_khoan.id_user as id_user, tai_khoan.dia_chi as dia_chi,gio_hang.so_luong as so_luong,chi_tiet_san_pham.id_ctsp as id_ctsp,chi_tiet_san_pham.id_sp as id_sp,chi_tiet_san_pham.dung_luong as dung_luong, chi_tiet_san_pham.mau_sac as mau_sac, chi_tiet_san_pham.so_luong as sl_ctsp,chi_tiet_san_pham.hinh as hinh,san_pham.ten_sp as ten_sp, san_pham.gia_goc as gia_goc , san_pham.giam_gia as giam_gia FROM gio_hang 
+        INNER JOIN tai_khoan on gio_hang.id_user = tai_khoan.id_user 
+        INNER JOIN chi_tiet_san_pham on gio_hang.id_ctsp=chi_tiet_san_pham.id_ctsp 
+        INNER JOIN san_pham on chi_tiet_san_pham.id_sp=san_pham.id_sp WHERE gio_hang.id_gh in ($id_gh_list)";
+        return $this->pdo_query($sql);
     }
     public function getone_gh($id_user, $id_gh)
     {

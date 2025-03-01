@@ -113,12 +113,9 @@ class ProductController extends BaseController
             $_SESSION['san_pham'] = $sanpham;
             $_SESSION['ctsp'] = $this->chitietsanphamModel->getone_ctsp($_POST['id_ctsp'][0]);
             $_SESSION['so_luong'] = $_POST['so_luong'][0];
-            header('location:' . route("dat_hang"));
+            header('location:' . route("dat_hang_ngay"));
         }
-        if (isset($_POST['them_vao_gio'])) {
-            // $thong_bao = 'Chưa chọn cấu hình';
-            // $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq','thong_bao'));
-        }
+        
     }
 
     public function view_thong_tin()
@@ -126,20 +123,57 @@ class ProductController extends BaseController
         $title = "Thanh toán sản phẩm";
         $this->render("user.dathang", compact('title'));
     }
-    public function dat_hang()
+    public function dat_ngay()
+    {
+        $title = "Thanh toán sản phẩm";
+        $this->render("user.dathangngay", compact('title'));
+    }
+    public function dat_hang_ngay()
     {
         if (isset($_POST['dat_hang'])) {
             $ngay = date('Y-m-d');
             $id_hd = $this->hoadonModel->add_hoadon($_SESSION['user']['id_user'], $_POST['ho_ten'], $_POST['email'], $_POST['so_dien_thoai'], $_POST['dia_chi'], $ngay);
-            $this->hoadonModel->add_cthd($id_hd, $_POST['id_sp'], $_POST['mau_sac'], $_POST['dung_luong'], $_POST['so_luong'], $_POST['gia_ban']);
-            header('location:' . route(""));
-        }
+            $this->hoadonModel->add_cthd(
+                $id_hd, 
+                $_POST['id_sp'], 
+                $_POST['mau_sac'], 
+                $_POST['dung_luong'], 
+                $_POST['so_luong'], 
+                $_POST['gia_ban']);
+            header('location:' . route("don_hang"));
+        } 
+    }
+    public function dat_hang()
+    {
+        if (isset($_POST['dat_hang_gh'])) {
+            $ngay = date('Y-m-d');
+            $id_hd = $this->hoadonModel->add_hoadon($_SESSION['user']['id_user'], $_POST['ho_ten'], $_POST['email'], $_POST['so_dien_thoai'], $_POST['dia_chi'], $ngay);
+            $dsgh = $this->giohangModel->danhsach_thanhtoan($_POST['id_gh']);
+            foreach ($dsgh as $key => $sp) {
+                $this->hoadonModel->add_cthd(
+                    $id_hd,          // ID hóa đơn
+                    $sp['id_sp'],    // ID sản phẩm
+                    $sp['mau_sac'],  // Màu sắc
+                    $sp['dung_luong'], // Dung lượng
+                    $sp['so_luong'], // Số lượng
+                    $sp['gia_goc'] - ($sp['gia_goc'] * $sp['giam_gia'] / 100) // Giá bán sau giảm giá
+                );
+            }
+            // var_dump($dsgh);
+            header('location:' . route("don_hang"));
+        } 
     }
     public function don_hang()
     {
         $title = "Đơn hàng của bạn";
         $ds_hd = $this->hoadonModel->danh_sach_cthd($_SESSION['user']['id_user']);
         $this->render("user.donhang", compact('ds_hd', 'title'));
+    }
+    public function chi_tiet_don_hang($id_hd)
+    {
+        $title = "Chi tiết đơn hàng";
+        $ds_cthd = $this->hoadonModel->dscthd($id_hd);
+        $this->render("user.chitietdonhang", compact('ds_cthd', 'title'));
     }
     public function phan_trang($page)
     {
