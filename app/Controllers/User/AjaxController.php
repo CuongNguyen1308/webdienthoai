@@ -92,15 +92,17 @@ class AjaxController extends BaseController
 
         echo "Thêm thành công vào giỏ hàng";
     }
-    public function updateQuantity() {
+    public function updateQuantity()
+    {
         $id_ctsp = $_POST['id_ctsp'];
         $so_luong = $_POST['so_luong'];
         $id_gh = $_POST['id_gh'];
 
-        $this->giohangModel->update_giohang($id_gh,$id_ctsp,$so_luong);
+        $this->giohangModel->update_giohang($id_gh, $id_ctsp, $so_luong);
         echo json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
     }
-    public function updateVariant(){
+    public function updateVariant()
+    {
         $id_ctsp = $_POST['id_ctsp'];
         $so_luong = $_POST['so_luong'];
         $so_luong_max = $_POST['so_luong_max'];
@@ -113,7 +115,7 @@ class AjaxController extends BaseController
             return;
         }
 
-        $this->giohangModel->updateVariant($id_user,$id_gh,$id_ctsp,$so_luong,$so_luong_max);
+        $this->giohangModel->updateVariant($id_user, $id_gh, $id_ctsp, $so_luong, $so_luong_max);
         echo json_encode(['success' => true, 'message' => 'Cập nhật thành công']);
     }
 }

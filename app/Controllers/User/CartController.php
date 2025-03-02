@@ -33,12 +33,14 @@ class CartController extends BaseController
     }
     //lấy toàn bộ sản phẩm
     public function gio_hang() {
+        $danhmuc = $this->danhmucModel->danhsach_danhmuc();
+
         $title = "Giỏ hàng";
         $items = $this->giohangModel->danhsach_giohang($_SESSION['user']['id_user']);
         foreach ($items as &$item) {
             $item['ctsp'] = $this->chitietsanphamModel->danhsach_ctsp($item['id_sp']); // Lấy biến thể cho từng sản phẩm
         }
-        $this->render('user.giohang', compact('title','items'));
+        $this->render('user.giohang', compact('title','items','danhmuc'));
     }
     public function delete($id)
     {

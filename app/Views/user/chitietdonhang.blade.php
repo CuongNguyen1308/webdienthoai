@@ -13,14 +13,14 @@
                     </div>
                     <div class="col-md-10">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold">{{ $value['ten_sp'] }}</h5>
+                            <a class="card-title fw-bold" href="{{ route('chi_tiet_san_pham/'.$value['id_sp']) }}">{{ $value['ten_sp'] }}</a>
                             <div class="d-flex justify-content-between align-items-center mt-2">
                                 <div>
                                     <p class="mb-1"><strong>Cấu hình:</strong> {{ $value['mau_sac'] }} - {{ $value['dung_luong'] }}</p>
                                     <p class="mb-1"><strong>Số lượng:</strong> {{ $value['so_luong'] }}</p>
                                 </div>
                                 <div class="text-end">
-                                    <h5 class="text-danger fw-bold">{{ number_format($value['gia_ban']) }} đ</h5>
+                                    <h5 class="text-danger fw-bold">{{ number_format($value['gia_ban']*$value['so_luong']) }} đ</h5>
                                 </div>
                             </div>
                         </div>

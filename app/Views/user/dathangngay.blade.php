@@ -42,6 +42,7 @@
             $gia_ban = ceil($_SESSION['san_pham']['gia_goc'] - $_SESSION['san_pham']['gia_goc'] * ($_SESSION['san_pham']['giam_gia'] / 100)) * $_SESSION['so_luong'];
             ?>
             <input type="text" name="id_sp" value="{{ $_SESSION['san_pham']['id_sp'] }}" hidden>
+            <input type="text" name="id_ctsp" value="{{ $_SESSION['ctsp']['id_ctsp'] }}" hidden>
             <input type="text" name="mau_sac" value="{{ $_SESSION['ctsp']['mau_sac'] }}" hidden>
             <input type="text" name="dung_luong" value="{{ $_SESSION['ctsp']['dung_luong'] }}" hidden>
             <input type="text" name="so_luong" value="{{ $_SESSION['so_luong'] }}" hidden>

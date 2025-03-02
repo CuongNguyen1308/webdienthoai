@@ -85,6 +85,8 @@ class ProductController extends BaseController
     }
     public function chi_tiet_san_pham($id_sp)
     {
+        $danhmuc = $this->danhmucModel->danhsach_danhmuc();
+
         $sanpham = $this->sanphamModel->getById($id_sp);
         $title = $sanpham['ten_sp'];
         $ctsp = $this->chitietsanphamModel->danhsach_ctsp($id_sp);
@@ -92,7 +94,7 @@ class ProductController extends BaseController
         $ds_bl = $this->binhluanModel->danhsach_bl_us($id_sp);
         $sanphamlq = $this->sanphamModel->sanpham_lienquan($sanpham['id_dm'], $sanpham['id_sp']);
 
-        $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq'));
+        $this->render('user.chitietsanpham', compact('sanpham', 'title', 'ctsp', 'ds_bl', 'sanphamlq', 'danhmuc'));
     }
     public function chi_tiet_san_pham_cau_hinh($id_sp, $id_ctsp)
     {
@@ -115,7 +117,6 @@ class ProductController extends BaseController
             $_SESSION['so_luong'] = $_POST['so_luong'][0];
             header('location:' . route("dat_hang_ngay"));
         }
-        
     }
 
     public function view_thong_tin()
@@ -134,14 +135,16 @@ class ProductController extends BaseController
             $ngay = date('Y-m-d');
             $id_hd = $this->hoadonModel->add_hoadon($_SESSION['user']['id_user'], $_POST['ho_ten'], $_POST['email'], $_POST['so_dien_thoai'], $_POST['dia_chi'], $ngay);
             $this->hoadonModel->add_cthd(
-                $id_hd, 
-                $_POST['id_sp'], 
-                $_POST['mau_sac'], 
-                $_POST['dung_luong'], 
-                $_POST['so_luong'], 
-                $_POST['gia_ban']);
+                $id_hd,
+                $_POST['id_sp'],
+                $_POST['mau_sac'],
+                $_POST['dung_luong'],
+                $_POST['so_luong'],
+                $_POST['gia_ban']
+            );
+            $this->chitietsanphamModel->cap_nhat_so_luong($_POST['id_ctsp'],$_POST['so_luong']);
             header('location:' . route("don_hang"));
-        } 
+        }
     }
     public function dat_hang()
     {
@@ -158,16 +161,20 @@ class ProductController extends BaseController
                     $sp['so_luong'], // Số lượng
                     $sp['gia_goc'] - ($sp['gia_goc'] * $sp['giam_gia'] / 100) // Giá bán sau giảm giá
                 );
+                $this->chitietsanphamModel->cap_nhat_so_luong($sp['id_ctsp'], $sp['so_luong']);
+                $this->giohangModel->delete_giohang($sp['id_gh']);
             }
             // var_dump($dsgh);
             header('location:' . route("don_hang"));
-        } 
+        }
     }
     public function don_hang()
     {
+        $danhmuc = $this->danhmucModel->danhsach_danhmuc();
+
         $title = "Đơn hàng của bạn";
         $ds_hd = $this->hoadonModel->danh_sach_cthd($_SESSION['user']['id_user']);
-        $this->render("user.donhang", compact('ds_hd', 'title'));
+        $this->render("user.donhang", compact('ds_hd', 'title', 'danhmuc'));
     }
     public function chi_tiet_don_hang($id_hd)
     {
@@ -227,14 +234,14 @@ class ProductController extends BaseController
         $re_password = $_POST['re_password'];
         $phone = $_POST['phone'];
         $address = $_POST['address'];
-        
+
         $check = $this->taikhoanModel->check($email);
-        if($check){
+        if ($check) {
             $thongbao = 'Email đã tồn tại';
             $this->render('user.register', compact('thongbao'));
             return;
         }
-        if ($password == $re_password ) {
+        if ($password == $re_password) {
             $this->taikhoanModel->register($name, $email, $phone, $password, $address);
             $_SESSION['success_message'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
             header('location:' . route("dang_nhap"));
@@ -245,8 +252,10 @@ class ProductController extends BaseController
     }
     public function acount()
     {
+        $danhmuc = $this->danhmucModel->danhsach_danhmuc();
+
         $title = "Thông tin tài khoản";
-        $this->render('user.acount', compact('title'));
+        $this->render('user.acount', compact('title', 'danhmuc'));
     }
     public function logout()
     {

@@ -37,9 +37,12 @@ class Chitietsanpham extends db
         $sql = "UPDATE chi_tiet_san_pham SET so_luong =$so_luong where id_ctsp =$id_ctsp";
         $this->pdo_execute($sql);
     }
-    public function cau_hinh($id_sp, $mau_sac, $dung_luong)
+    public function cap_nhat_so_luong($id_ctsp,$so_luong)
     {
-        $sql = "SELECT * FROM chi_tiet_san_pham WHERE id_sp = $id_sp and mau_sac = '$mau_sac' and dung_luong = '$dung_luong'";
+        $ctsp = $this->getone_ctsp($id_ctsp);
+        $so_luong_new = $ctsp['so_luong'] - $so_luong;
+
+        $sql = "UPDATE chi_tiet_san_pham SET so_luong =$so_luong_new where id_ctsp =$id_ctsp";
         return $this->pdo_query_one($sql);
     }
 }

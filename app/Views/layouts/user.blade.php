@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,10 +80,17 @@
                 <div class="col-md-1">
                     <div class="row">
                         <div class="col">
-                            <a href="{{ route('gio_hang') }}" class=" position-relative">
+                            @if (isset($_SESSION['user']))
+                                <a href="{{ route('gio_hang') }}" class=" position-relative">
+                                    <span class="fs-2"><i class="fa-solid fa-cart-shopping"
+                                            style="color: #000000;"></i></span>
+                                </a>
+                            @else
+                            <a href="{{ route('dang_nhap') }}" class=" position-relative">
                                 <span class="fs-2"><i class="fa-solid fa-cart-shopping"
                                         style="color: #000000;"></i></span>
                             </a>
+                            @endif
                         </div>
                     </div>
 

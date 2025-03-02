@@ -33,7 +33,7 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="{{ route('don_hang/'.$value['id_hd']) }}" class="link-primary text-decoration-none fw-bold">Xem chi tiết</a>
-                        <h5 class="text-danger fw-bold">Tổng giá: {{ number_format($value['tong_tien']) }} đ</h5>
+                        <h5 class="text-danger fw-bold">Tổng tiền: {{ number_format($value['tong_tien']) }} đ</h5>
                     </div>
                 </div>
             </div>

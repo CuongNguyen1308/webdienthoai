@@ -168,6 +168,8 @@
                 </div>
             </div>
             {{-- Phân trang --}}
+            <div id="pagination" class="d-flex justify-content-center mt-3"></div>
+
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <?php
@@ -209,17 +211,18 @@
                 var max_price = $('#hidden_maximum_price').val();
                 var danh_muc = [];
                 var sort = $("#loc").val(); // Lấy giá trị của select
-
+                var page = getPageFromUrl();
+                
                 $(".common_selector.brand:checked").each(function() {
                     danh_muc.push($(this).val());
                 });
-                console.log(danh_muc);
                 var filter = {
                     action: action,
                     min_price: min_price,
                     max_price: max_price,
                     danh_muc: danh_muc,
-                    sort: sort
+                    sort: sort,
+                    page: page
                 }
 
                 $.ajax({
@@ -230,6 +233,12 @@
                         $('.filter_data').html(data);
                     }
                 });
+            }
+
+            function getPageFromUrl() {
+                const urlParts = window.location.pathname.split('/');
+                const pageIndex = urlParts.indexOf('page');
+                return (pageIndex !== -1 && urlParts[pageIndex + 1]) ? parseInt(urlParts[pageIndex + 1]) : 1;
             }
             // Bắt sự kiện khi thay đổi danh mục
             $(document).on("change", ".common_selector.brand", function() {
@@ -248,7 +257,8 @@
                 values: [1000, 50000000],
                 step: 10000,
                 stop: function(event, ui) {
-                    $('#price_show').html("Từ: " + formatCurrency(ui.values[0]) + " - " + formatCurrency(ui.values[1]));
+                    $('#price_show').html("Từ: " + formatCurrency(ui.values[0]) + " - " +
+                        formatCurrency(ui.values[1]));
                     $('#hidden_minimum_price').val(ui.values[0]);
                     $('#hidden_maximum_price').val(ui.values[1]);
                     filter_data();
@@ -258,6 +268,7 @@
             function formatCurrency(amount) {
                 return new Intl.NumberFormat('vi-VN').format(amount);
             }
+
         });
     </script>
 @endsection
