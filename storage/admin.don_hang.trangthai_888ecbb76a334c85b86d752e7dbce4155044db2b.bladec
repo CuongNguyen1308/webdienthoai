@@ -6,21 +6,22 @@
  <label for="name" class="form-label">Trạng thái</label> <br>
 
  <?php if($donhang['trang_thai'] == 1): ?>
- <select name="trang_thai" id="">
+ <select class="form-control" name="trang_thai" id="">
  <option value="1" selected>Đang chuẩn bị hàng</option>
  <option value="2">Đang giao hàng</option>
+ <option value="0">Hủy đơn hàng</option>
  </select>
  <?php endif; ?>
 
  <?php if($donhang['trang_thai'] == 2): ?>
- <select name="trang_thai" id="">
+ <select class="form-control" name="trang_thai" id="">
  <option value="2" selected>Đang giao hàng</option>
  <option value="3">Hàng đã vận chuyển đến</option>
  </select>
  <?php endif; ?>
 
  <?php if($donhang['trang_thai'] == 3): ?>
- <select name="trang_thai" id="">
+ <select class="form-control" name="trang_thai" id="">
  <option value="3" selected>Hàng đã vận chuyển đến</option>
  <option value="4" >Giao hàng thất bại</option>
  <option value="5" >Đã nhận được hàng</option>

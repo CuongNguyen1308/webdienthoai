@@ -11,13 +11,15 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="fw-bold">Mã đơn hàng: #0{{ $value['id_hd'] }}</h5>
                         @if ($value['id_tt'] == 1)
-                            <a class="btn btn-danger" href="?act=xoa-don&id_hd={{ $value['id_hd'] }}" onclick="return confirm('Bạn có chắc muốn hủy không?')">Hủy đơn hàng</a>
+                            <a class="btn btn-danger" href="{{ route('don_hang/'.$value['id_hd'].'/huydon') }}" onclick="return confirm('Bạn có chắc muốn hủy không?')">Hủy đơn hàng</a>
                         @elseif ($value['id_tt'] == 2)
                             <h6 class="btn btn-secondary">Đang giao hàng</h6>
                         @elseif ($value['id_tt'] == 3)
-                            <a href="?act=da-nhan&id_hd={{ $value['id_hd'] }}" onclick="return confirm('Đã nhận được hàng?')" class="btn btn-warning">Đã nhận được hàng</a>
+                            <a href="{{ route('don_hang/'.$value['id_hd'].'/xacnhan') }}" onclick="return confirm('Đã nhận được hàng?')" class="btn btn-warning">Đã nhận được hàng</a>
                         @elseif ($value['id_tt'] == 5)
                             <h6 class="btn btn-success">Giao hàng thành công</h6>
+                        @elseif ($value['id_tt'] == 0)
+
                         @else
                             <h6 class="btn btn-warning">Giao hàng không thành công</h6>
                         @endif

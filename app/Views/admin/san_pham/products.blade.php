@@ -14,6 +14,7 @@
             <th>Tên sản phẩm</th>
             <th>Giá gốc</th>
             <th>Giảm giá</th>
+            <th>Số lượng</th>
             <th>Hình</th>
             <th>Số lượt xem</th>
             <th>Danh mục</th>
@@ -24,8 +25,9 @@
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $product['ten_sp'] }}</td>
-                <td>{{ $product['gia_goc'] }}</td>
-                <td>{{ $product['giam_gia'] }}</td>
+                <td>{{ number_format($product['gia_goc']) }}</td>
+                <td>{{ number_format($product['giam_gia']*$product['gia_goc']/100) }}</td>
+                <td>{{ $product['sl'] }}</td>
                 <td><img src="{{ BASE_URL }}public/uploads/{{ $product['hinh'] }}" alt="" height="50px"></td>
                 <td>{{ $product['so_luot_xem'] }}</td>
                 <td>{{ $product['ten_dm'] }}</td>

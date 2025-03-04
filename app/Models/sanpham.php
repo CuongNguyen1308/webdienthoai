@@ -111,7 +111,21 @@ class Sanpham extends db
         if (isset($id_dm)) {
             $where .= " and san_pham.id_dm = $id_dm";
         }
-        $sql = "SELECT * FROM san_pham inner join danh_muc ON danh_muc.id_dm = san_pham.id_dm $where LIMIT $start,$row";
+        $sql = "SELECT 
+            san_pham.id_sp,
+            san_pham.hinh,
+            san_pham.gia_goc, 
+            san_pham.giam_gia, 
+            san_pham.so_luot_xem, 
+            san_pham.ten_sp, 
+            danh_muc.ten_dm,
+            SUM(chi_tiet_san_pham.so_luong) as sl
+            FROM san_pham 
+            INNER JOIN danh_muc ON danh_muc.id_dm = san_pham.id_dm 
+            INNER JOIN chi_tiet_san_pham ON san_pham.id_sp = chi_tiet_san_pham.id_sp
+            $where
+            GROUP BY san_pham.id_sp, san_pham.ten_sp, danh_muc.ten_dm
+            LIMIT $start, $row";
         return $this->pdo_query($sql);
     }
     public function tong_trang($id_dm = null)

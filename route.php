@@ -9,6 +9,7 @@ use App\Controllers\User\ProductController as UserController;
 use App\Controllers\Admin\ProductController;
 use App\Controllers\Admin\CategoryController;
 use App\Controllers\Admin\CommentController;
+use App\Controllers\Admin\StatisticalController;
 use App\Controllers\User\AjaxController;
 use App\Controllers\User\CartController;
 
@@ -76,6 +77,8 @@ $router->post('dat_hang_ngay',[UserController::class,"dat_hang_ngay"]);
 
 $router->get('don_hang',[UserController::class,'don_hang']);
 $router->get('don_hang/{id_hd}',[UserController::class,'chi_tiet_don_hang']);
+$router->get('don_hang/{id}/huydon', [UserController::class,'huydon']);
+$router->get('don_hang/{id}/xacnhan', [UserController::class,'xacnhan']);
 
 $router->get('san_pham',[UserController::class,"san_pham"]);
 $router->get('san_pham/page/{page}/',[UserController::class,"phan_trang"]);
@@ -123,6 +126,8 @@ $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
     $router->get('/don_hang/{id_hd}', [BillController::class,'cthd']);
     $router->get('/don_hang/{id_hd}/edit', [BillController::class,'edit']);
     $router->post('/don_hang/{id_hd}/edit', [BillController::class,'update']);
+
+    $router->get('/thong_ke',[StatisticalController::class,'thong_ke']);
 });
 
 // get: trả về giao diện thêm mới sản phẩm

@@ -211,8 +211,8 @@ class ProductController extends BaseController
     public function checklogin()
     {
         $email = $_POST['email'];
-        $mat_khau = $_POST['mat_khau'];
-        $login = $this->taikhoanModel->login($email, $mat_khau);
+        $password = $_POST['password'];
+        $login = $this->taikhoanModel->login($email, $password);
         if (is_array($login)) {
             $_SESSION['user'] = $login;
             header('location:' . route(""));
@@ -261,5 +261,13 @@ class ProductController extends BaseController
     {
         unset($_SESSION['user']);
         header('location:' . route(""));
+    }
+    public function huydon($id){
+        $this->hoadonModel->doi_trang_thai(0,$id);
+        header('location:' . route("don_hang"));
+    }
+    public function xacnhan($id){
+        $this->hoadonModel->doi_trang_thai(5,$id);
+        header('location:' . route("don_hang"));
     }
 }
