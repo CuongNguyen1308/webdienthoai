@@ -13,6 +13,7 @@
                 <th scope="col">STT</th>
                 <th scope="col">Thông tin</th>
                 <th scope="col">Địa chỉ</th>
+                <th scope="col">Ngày đặt hàng</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Hành động</th>
             </tr>
@@ -31,6 +32,7 @@
                     </ul>
                 </th>
                 <th><?= $value['dia_chi'] ?></th>
+                <th><?= $value['ngay_dat'] ?></th>
                 <th><?= $value['ten_tt'] ?></th>
                 <th><a href="{{ route('admin/don_hang/' . $value['id_hd']) }}" class="btn btn-info">Chi tiết đơn</a>
                     @if ($value['trang_thai'] != 0 && $value['trang_thai'] != 4 && $value['trang_thai'] != 5)

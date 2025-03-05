@@ -241,74 +241,52 @@
  </main>
  <!-- <script src="../assets/js/admin.js"></script> -->
  <!-- footer -->
- <footer class="bg-dark text-white py-4 mt-5">
+ <footer class="bg-dark text-white py-5 mt-5">
  <div class="container">
  <div class="row">
- <div class="col">
- <h5>Văn phòng giao dịch</h5>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
+ <div class="col-md-3">
+ <h5 class="mb-3">Văn phòng giao dịch</h5>
+ <ul class="list-unstyled">
+ <li><a href="#" class="text-white">Trang chủ</a></li>
+ <li><a href="#" class="text-white">Giới thiệu</a></li>
+ <li><a href="#" class="text-white">Dịch vụ</a></li>
+ <li><a href="#" class="text-white">Liên hệ</a></li>
+ </ul>
  </div>
- <div class="col">
- <h5>Thông tin chi tiết</h5>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
+ <div class="col-md-3">
+ <h5 class="mb-3">Thông tin chi tiết</h5>
+ <ul class="list-unstyled">
+ <li><a href="#" class="text-white">Chính sách bảo mật</a></li>
+ <li><a href="#" class="text-white">Điều khoản sử dụng</a></li>
+ <li><a href="#" class="text-white">Hướng dẫn mua hàng</a></li>
+ </ul>
  </div>
- <div class="col">
- <h5>Tin tức mới nhất</h5>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
+ <div class="col-md-3">
+ <h5 class="mb-3">Tin tức mới nhất</h5>
+ <ul class="list-unstyled">
+ <li><a href="#" class="text-white">Khuyến mãi</a></li>
+ <li><a href="#" class="text-white">Sự kiện</a></li>
+ <li><a href="#" class="text-white">Tin công nghệ</a></li>
+ </ul>
  </div>
- <div class="col">
- <h5>Giới thiệu cửa hàng</h5>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
- <p class="m-0">Trang chủ</p>
+ <div class="col-md-3">
+ <h5 class="mb-3">Liên hệ</h5>
+ <p class="mb-1">Địa chỉ: EAUT, Việt Nam</p>
+ <p class="mb-1">Email: contact@eauteaut.vn</p>
+ <p>Điện thoại: 0123 456 789</p>
  </div>
  </div>
- <hr>
- <div class="row">
+ <hr class="bg-light">
+ <div class="row d-flex justify-content-between">
  <div class="col-md-6">
- <h5>Thông tin cửa hàng</h5>
- <p class="m-0">Địa chỉ: Fpt</p>
- <p class="m-0">Địa chỉ: Fpt</p>
- <p class="m-0">Địa chỉ: Fpt</p>
- <p class="m-0">Địa chỉ: Fpt</p>
+ <p class="mb-0">&copy; 2025 Bản quyền thuộc về TuanMinh</p>
  </div>
- <div class="col-md-6">
- @copyright 2025
- <br>
- <div>
- <span class="box50 border mr-3 bg-light" style="color: #000000;"><i
- class="fa-brands fa-square-facebook"></i></span>
- <span class="box50 border mr-3 bg-light" style="color: #000000;"><i
- class="fa-brands fa-google"></i></span>
- <span class="box50 border mr-3 bg-light" style="color: #000000;"><i
- class="fa-brands fa-twitter"></i></span>
- <span class="box50 border mr-3 bg-light" style="color: #000000;"><i
- class="fa-brands fa-youtube"></i></span>
- <span class="box50 border mr-3 bg-light" style="color: #000000;"><i
- class="fa-brands fa-instagram"></i></span>
- </div>
+ <div class="col-md-6 text-md-end">
+ <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+ <a href="#" class="text-white me-3"><i class="fab fa-google fa-lg"></i></a>
+ <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+ <a href="#" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+ <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
  </div>
  </div>
  </div>

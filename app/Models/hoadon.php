@@ -19,7 +19,7 @@ class Hoadon extends db
     //
     public function danh_sach_hoa_don($start = 0, $row = 4)
     {
-        $sql = "SELECT * from hoa_don inner join trang_thai on trang_thai.id_tt=hoa_don.trang_thai LIMIT $start,$row";
+        $sql = "SELECT * from hoa_don inner join trang_thai on trang_thai.id_tt=hoa_don.trang_thai ORDER BY hoa_don.ngay_dat desc LIMIT $start,$row";
         return $this->pdo_query($sql);
     }
     public function phan_trang($start, $row)
