@@ -24,7 +24,9 @@ class ProductController extends BaseController
     {
         //xử lý logic, validate dữ liệu
         $title = "Danh sách sản phẩm";
-        $tongrecord = $this->sanphamModel->tong_trang();
+        $tim_kiem = $_GET['tim_kiem'] ?? null;
+
+        $tongrecord = $this->sanphamModel->tong_trang(null,$tim_kiem);
         if (isset($_GET['page'])) $page = $_GET['page'];
         $row = 5;
         $start = ($page - 1) * $row;
@@ -36,9 +38,10 @@ class ProductController extends BaseController
         if ($to > $tongsotrang) $to = $tongsotrang;
         $pagenext = $page + 1;
         $pagepre = $page - 1;
-        $products = $this->sanphamModel->phan_trang($start, $row);
+        $id_dm = $_GET['id_dm'] ?? null;
+        $products = $this->sanphamModel->phan_trang($start, $row, $id_dm  ,$tim_kiem);
         // include "app/Views/products.php";
-        $this->render('admin.san_pham.products', compact('products', 'title', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
+        $this->render('admin.san_pham.products', compact('products', 'title', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre', 'tim_kiem'));
     }
     public function add_sp()
     {

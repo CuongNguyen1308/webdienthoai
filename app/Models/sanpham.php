@@ -105,16 +105,20 @@ class Sanpham extends db
         $sql = "SELECT * FROM san_pham WHERE id_dm = $id_dm AND id_sp != $id_sp LIMIT 0,4";
         return $this->pdo_query($sql);
     }
-    public function phan_trang($start, $row, $id_dm = null)
+    public function phan_trang($start, $row, $id_dm = null, $tim_kiem = null)
     {
         $where = "where 1 ";
         if (isset($id_dm)) {
-            $where .= " and san_pham.id_dm = $id_dm";
+            $where .= " and san_pham.id_dm = $id_dm ";
+        }
+        if (isset($tim_kiem) && $tim_kiem != "") {
+            $where .= " and san_pham.ten_sp like '%$tim_kiem%'";
         }
         $sql = "SELECT 
             san_pham.id_sp,
             san_pham.hinh,
             san_pham.gia_goc, 
+            san_pham.mo_ta, 
             san_pham.giam_gia, 
             san_pham.so_luot_xem, 
             san_pham.ten_sp, 
@@ -128,11 +132,14 @@ class Sanpham extends db
             LIMIT $start, $row";
         return $this->pdo_query($sql);
     }
-    public function tong_trang($id_dm = null)
+    public function tong_trang($id_dm = null,$tim_kiem = null)
     {
         $where = "where 1 ";
         if (isset($id_dm)) {
-            $where .= " and san_pham.id_dm = $id_dm";
+            $where .= " and id_dm = $id_dm ";
+        }
+        if (isset($tim_kiem) && $tim_kiem != "") {
+            $where .= " and ten_sp like '%$tim_kiem%'";
         }
         $sql = "SELECT COUNT(*) as tongrecord FROM san_pham $where";
         return $this->pdo_query_one($sql);

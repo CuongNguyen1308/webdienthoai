@@ -10,8 +10,10 @@ use App\Controllers\Admin\ProductController;
 use App\Controllers\Admin\CategoryController;
 use App\Controllers\Admin\CommentController;
 use App\Controllers\Admin\StatisticalController;
+use App\Controllers\Admin\NewsController;
 use App\Controllers\User\AjaxController;
 use App\Controllers\User\CartController;
+
 
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $router = new RouteCollector();
@@ -87,7 +89,7 @@ $router->get('san_pham/{id_dm}/',[UserController::class,"danh_muc"]);
 $router->post('filter_product',[AjaxController::class,'filter']);
 
 $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
-    $router->get('/',[ProductController::class, "san_pham"]);
+    $router->get('/',[StatisticalController::class, "thong_ke"]);
 
     $router->get('/danh_muc', [CategoryController::class,'danh_muc']);
     $router->get('/danh_muc/add', [CategoryController::class,'add']);
@@ -128,6 +130,8 @@ $router->group(['before' => 'auth', 'prefix' => '/admin'], function ($router) {
     $router->post('/don_hang/{id_hd}/edit', [BillController::class,'update']);
 
     $router->get('/thong_ke',[StatisticalController::class,'thong_ke']);
+
+    $router->get('/tin_tuc', [NewsController::class,'tin_tuc']);
 });
 
 // get: trả về giao diện thêm mới sản phẩm

@@ -58,7 +58,8 @@ class ProductController extends BaseController
         if ($to > $tongsotrang) $to = $tongsotrang;
         $pagenext = $page + 1;
         $pagepre = $page - 1;
-        $sanpham = $this->sanphamModel->phan_trang($start, $row);
+        $tim_kiem = $_GET['tim_kiem'] ?? null;
+        $sanpham = $this->sanphamModel->phan_trang($start, $row,null , $tim_kiem);
         $this->render('user.sanpham', compact('title', 'danhmuc', 'sanpham', 'top_5', 'row', 'start', 'tongsotrang', 'from', 'to', 'pagenext', 'pagepre'));
     }
     public function danh_muc($id_dm)

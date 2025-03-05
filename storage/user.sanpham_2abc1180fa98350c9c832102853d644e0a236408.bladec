@@ -115,8 +115,8 @@
  <article class="col-md-9 mt-3">
  <div class="tilte-product p-2">
  <?php
- if (isset($_POST['tim_kiem'])) {
- echo '<h4>Sản phẩm có từ khóa "' . $_POST['tim_kiem'] . '"</h4>';
+ if (isset($_GET['tim_kiem'])) {
+ echo '<h4>Sản phẩm có từ khóa "' . $_GET['tim_kiem'] . '"</h4>';
  } else {
  echo '<h4>Tất cả sản phẩm</h4>';
  }
